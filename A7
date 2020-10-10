@@ -1,0 +1,105 @@
+# Lane Alexander, ljalexan@usc.edu
+# ITP 115, Spring 2020
+# Assignment 7
+# Description:
+# This program plays rock, paper, scissors against the user
+
+import random
+
+def displayMenu():
+	print("Welcome! Let's play rock, paper, scissors.")
+	print("The rules of the game are:\n\tRock smashes scissors\n\tScissors cut paper\n\tPaper covers rock\n\tIf both the choices are the same, its a tie")
+
+def getComputerChoice():
+	compNum = random.randrange(0,3)
+	return compNum
+
+def getPlayerChoice():
+	playerNum = int(input("Please choose 0) for rock, (1) for paper or (2) for scissors\n>"))
+	return playerNum
+
+
+def continueGame(bool):
+	choice = input("Would you like to play again? (y/n): ")
+	if choice == "y":
+		willContinue = True
+		return continueGame
+	else:
+		willContinue = False
+		print ("Thanks for playing!")
+
+# game logic
+def playRound(compMove,playerMove):
+	outcome = ""
+	if playerMove == 0:
+		print ("You chose Rock.")
+		if compMove == 0:
+			print ("The computer chose Rock.\nIt's a Tie!")
+			outcome = 0
+			return outcome
+		elif compMove == 1:
+			print ("The computer chose paper.\nPaper covers Rock. You lose!")
+			outcome = -1
+			return outcome
+		elif compMove == 2:
+			print("The computer chose scissors.\nRock crushes scissors. You win!'")
+			outcome = 1
+			return outcome
+	if playerMove == 1:
+		print ("You chose Paper")
+		if compMove == 0:
+			print ("The computer chose rock.\nPaper covers Rock. You Win!")
+			outcome = 1
+			return outcome
+		elif compMove == 1:
+			print ("The computer chose paper.\nIt's a Tie!")
+			outcome = 0
+			return outcome
+		elif compMove == 2:
+			print ("The computer chose scissors.\nScissors cut Paper. You Lose!")
+			outcome = -1
+			return outcome
+	if playerMove == 2:
+		print ("You chose Scissors.")
+		if compMove == 0:
+			print("The computer chose Rock.\nRock crushes Scissors. You Lose!")
+			outcome = -1
+			return outcome
+		elif compMove == 1:
+			print ("The computer chose paper\nScissors cuts Paper. You Win!")
+			outcome = 1
+			return outcome
+		elif compMove == 2:
+			print ("The computer chose scissors\nIt's a Tie!")
+			outcome = 0
+			return outcome
+
+def main():
+	playerWins = 0
+	computerWins = 0
+	ties = 0
+	willContinue = True
+	outcome = ""
+
+	# while loop
+	while willContinue == True:
+		# display menu
+		displayMenu()
+		# computer choice
+		compMove = getComputerChoice()
+		# player choice
+		playerMove = getPlayerChoice()
+		# see who won
+		outcome = playRound(compMove,playerMove)
+		# keep track of score
+		if outcome == 0:
+			ties = ties + 1
+		elif outcome == 1:
+			playerWins = playerWins + 1
+		elif outcome == -1:
+			computerWins = computerWins + 1
+		# ask if user wants to continue
+		continueGame(willContinue)
+		# display total wins and losses
+		print ("You won",playerWins,"game(s).\nThe computer won",computerWins,"game(s).\nYou tied with the computer",ties,"time(s).\n\n")
+main()
